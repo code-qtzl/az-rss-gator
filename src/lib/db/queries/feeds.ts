@@ -31,3 +31,12 @@ export async function getAllFeeds() {
 		.innerJoin(users, eq(feeds.userId, users.id));
 	return allFeeds;
 }
+
+export async function getFeedByUrl(url: string) {
+	const result = await db
+		.select()
+		.from(feeds)
+		.where(eq(feeds.url, url))
+		.limit(1);
+	return firstOrUndefined(result);
+}
