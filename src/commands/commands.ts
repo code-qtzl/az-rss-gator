@@ -1,3 +1,7 @@
+import { User } from '../lib/db/schema';
+import { getUserByName } from '../lib/db/queries/users';
+import { readConfig } from '../config';
+
 export type CommandHandler = (
 	cmdName: string,
 	...args: string[]
@@ -25,3 +29,9 @@ export async function runCommand(
 
 	await handler(cmdName, ...args);
 }
+
+export type UserCommandHandler = (
+	cmdName: string,
+	user: User,
+	...args: string[]
+) => Promise<void>;
