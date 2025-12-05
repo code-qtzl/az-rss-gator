@@ -15,6 +15,13 @@
       "when": 1764783784781,
       "tag": "0001_useful_sleeper",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1764904481652,
+      "tag": "0002_large_namor",
+      "breakpoints": true
     }
   ]
 }

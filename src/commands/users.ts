@@ -8,11 +8,11 @@ export async function handlerLogin(cmdName: string, ...args: string[]) {
 	}
 
 	const userName = args[0];
-	const user = await getUserByName(userName);
-	if (!user) {
+	const existingUser = await getUserByName(userName);
+	if (!existingUser) {
 		throw new Error(`User ${userName} doesn't exist`);
 	}
-	setUser(userName);
+	setUser(existingUser.name);
 	console.log('User switched successfully!');
 }
 

@@ -1,7 +1,9 @@
 import { readConfig } from '../config';
 import { getUserByName } from '../lib/db/queries/users';
 import { createFeed, getAllFeeds } from '../lib/db/queries/feeds';
+import { createFeedFollow } from '../lib/db/queries/feed_follow';
 import type { Feed, User } from '../lib/db/schema';
+import { printFeedFollow } from './feed_follow';
 
 export async function handlerAddFeed(cmdName: string, ...args: string[]) {
 	if (args.length !== 2) {
@@ -25,6 +27,15 @@ export async function handlerAddFeed(cmdName: string, ...args: string[]) {
 
 	console.log('Feed created successfully:');
 	printFeed(feed, user);
+
+	const feedFollow = await createFeedFollow(feed.id, user.id);
+	if (feedFollow) {
+		printFeedFollow(user.name, feedFollow.feedName);
+
+		console.log(
+			`${feedFollow.userName} is now following ${feedFollow.feedName}`,
+		);
+	}
 }
 
 function printFeed(feed: Feed, user: User) {
