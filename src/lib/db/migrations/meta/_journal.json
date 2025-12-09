@@ -22,6 +22,13 @@
       "when": 1764904481652,
       "tag": "0002_large_namor",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1765252828012,
+      "tag": "0003_careful_wild_pack",
+      "breakpoints": true
     }
   ]
 }

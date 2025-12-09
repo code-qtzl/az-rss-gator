@@ -2,6 +2,7 @@ import { db } from '..';
 import { feeds, users } from '../schema';
 import { firstOrUndefined } from './utils';
 import { eq, sql } from 'drizzle-orm';
+import { fetchFeed } from '../../rss';
 
 export async function createFeed(name: string, url: string, userId: string) {
 	const result = await db
@@ -60,4 +61,27 @@ export async function getNextFeedToFetch() {
 		.orderBy(sql`${feeds.last_fetched_at} NULLS FIRST`)
 		.limit(1);
 	return firstOrUndefined(result);
+}
+
+export async function scrapeFeeds() {
+	const feed = await getNextFeedToFetch();
+	if (!feed) {
+		console.log('No feeds to fetch.');
+		return;
+	}
+
+	await markFeedFetched(feed.id);
+
+	try {
+		const rss = await fetchFeed(feed.url);
+		if (rss.channel && Array.isArray(rss.channel.item)) {
+			for (const item of rss.channel.item) {
+				console.log(item.title);
+			}
+		} else {
+			console.log('No items found in feed.');
+		}
+	} catch (err) {
+		console.error(`Failed to fetch feed: ${feed.url}`, err);
+	}
 }
