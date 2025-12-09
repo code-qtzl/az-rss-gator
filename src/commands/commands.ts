@@ -36,22 +36,3 @@ export type UserCommandHandler = (
 	user: User,
 	...args: string[]
 ) => Promise<void>;
-
-export async function handlerBrowse(
-	cmdName: string,
-	user: User,
-	limitStr: string,
-) {
-	const limit = limitStr ? parseInt(limitStr) : 2;
-
-	const posts = await getPostsForUser(user.id, limit);
-	for (const post of posts) {
-		console.log(post.title);
-		console.log(post.url);
-		console.log(
-			post.publishedAt?.toLocaleString() ?? 'Publish date unknown',
-		);
-		console.log(post.description);
-		console.log('-'.repeat(70));
-	}
-}

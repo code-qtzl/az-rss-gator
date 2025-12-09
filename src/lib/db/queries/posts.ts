@@ -1,20 +1,9 @@
 import { desc, eq } from 'drizzle-orm';
 import { db } from '..';
-import { feed_follows, feeds, posts, users } from '../schema';
+import { feed_follows, feeds, posts, users, NewPost } from '../schema';
 
-export type Post = typeof posts.$inferSelect;
-
-export async function createPost(
-	title: string,
-	url: string,
-	description: string,
-	publishedAt: Date,
-	feedId: string,
-) {
-	const [result] = await db
-		.insert(posts)
-		.values({ title, url, description, publishedAt, feedId })
-		.returning();
+export async function createPost(post: NewPost) {
+	const [result] = await db.insert(posts).values(post).returning();
 	return result;
 }
 
