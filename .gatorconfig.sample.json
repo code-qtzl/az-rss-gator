@@ -1,0 +1,4 @@
+{
+	"db_url": "postgres://USERNAME:@localhost:PORT_NUMBER/DATABASE_NAME?sslmode=disable",
+	"current_user_name": "USERNAME"
+}
