@@ -2,6 +2,7 @@ import {
 	CommandsRegistry,
 	registerCommand,
 	runCommand,
+	handlerBrowse,
 } from './commands/commands';
 import {
 	handlerLogin,
@@ -55,6 +56,11 @@ async function main() {
 		commandsRegistry,
 		'unfollow',
 		middlewareLoggedIn(handlerUnfollowFeed),
+	);
+	registerCommand(
+		commandsRegistry,
+		'browse',
+		middlewareLoggedIn(handlerBrowse),
 	);
 
 	try {
