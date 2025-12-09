@@ -27,7 +27,7 @@ export async function getAllFeeds() {
 			url: feeds.url,
 			userId: feeds.userId,
 			createdBy: users.name,
-			last_fetched_at: feeds.last_fetched_at,
+			lastFetchedAt: feeds.lastFetchedAt,
 		})
 		.from(feeds)
 		.innerJoin(users, eq(feeds.userId, users.id));
@@ -48,7 +48,7 @@ export async function markFeedFetched(feedId: string) {
 	await db
 		.update(feeds)
 		.set({
-			last_fetched_at: now,
+			lastFetchedAt: now,
 			updatedAt: now,
 		})
 		.where(eq(feeds.id, feedId));
@@ -58,7 +58,7 @@ export async function getNextFeedToFetch() {
 	const result = await db
 		.select()
 		.from(feeds)
-		.orderBy(sql`${feeds.last_fetched_at} NULLS FIRST`)
+		.orderBy(sql`${feeds.lastFetchedAt} NULLS FIRST`)
 		.limit(1);
 	return firstOrUndefined(result);
 }

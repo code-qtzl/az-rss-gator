@@ -2,7 +2,6 @@ import {
 	CommandsRegistry,
 	registerCommand,
 	runCommand,
-	handlerBrowse,
 } from './commands/commands';
 import {
 	handlerLogin,
@@ -18,6 +17,7 @@ import {
 } from './commands/feeds';
 import { handlerFollow, handlerListFeedFollows } from './commands/feed_follow';
 import { middlewareLoggedIn } from './middleware';
+import { handlerBrowse } from './commands/browse';
 
 async function main() {
 	const args = process.argv.slice(2);
